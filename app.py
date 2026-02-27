@@ -2,6 +2,11 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import io
+import sys
+import os
+
+# Streamlit Cloud 환경에서 로컬 모듈(utils) 인식을 위한 경로 추가
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # 커스텀 모듈 임포트
 from utils.loader import load_raw_data
