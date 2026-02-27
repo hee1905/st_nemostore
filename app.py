@@ -5,13 +5,21 @@ import io
 import sys
 import os
 
-# Streamlit Cloud 환경에서 로컬 모듈(utils) 인식을 위한 경로 추가
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# 📂 Streamlit Cloud 환경에서 모듈 경로를 확실히 잡기 위한 설정
+# 현재 실행 파일(app.py)의 디렉토리를 탐색 경로 최상단에 추가
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
 
-# 커스텀 모듈 임포트
-from utils.loader import load_raw_data
-from utils.preprocess import preprocess_data
-import utils.charts as charts
+# 커스텀 모듈 임포트 (utils 명칭 충돌 방지를 위해 dashboard_modules로 변경)
+try:
+    from dashboard_modules.loader import load_raw_data
+    from dashboard_modules.preprocess import preprocess_data
+    import dashboard_modules.charts as charts
+except ImportError as e:
+    st.error(f"모듈 임포트 실패: {e}")
+    st.info("GitHub 저장소의 폴더 구조를 확인해 주세요. (app.py와 dashboard_modules 폴더가 같은 위치에 있어야 합니다.)")
+    st.stop()
 
 # 1️⃣ 페이지 기본 설정
 st.set_page_config(layout="wide", page_title="상업용 부동산 시장 분석 대시보드", page_icon="🏢")

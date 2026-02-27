@@ -24,10 +24,11 @@ real-estate-dashboard/
 ├── app.py                  # 메인 대시보드 어플리케이션
 ├── data/
 │   └── raw_data.json       # 원본 JSON 데이터
-├── utils/
-│   ├── loader.py           # 데이터 로딩 및 정규화 모듈
+├── dashboard_modules/      # (기존 utils) 핵심 분석 모듈 폴더
+│   ├── __init__.py         # 패키지 인식 파일
+│   ├── loader.py           # 데이터 로딩 및 정규화
 │   ├── preprocess.py       # 데이터 전처리 및 파생 변수 생성
-│   └── charts.py           # Plotly 시각화 렌더링 함수군
+│   └── charts.py           # Plotly 시각화 관련 함수
 ├── requirements.txt         # 파이썬 의존성 패키지
 ├── README.md                # 프로젝트 문서
 └── .gitignore               # 버전 관리 제외 설정
