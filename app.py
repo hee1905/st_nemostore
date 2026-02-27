@@ -11,14 +11,23 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 if current_dir not in sys.path:
     sys.path.insert(0, current_dir)
 
-# 커스텀 모듈 임포트 (utils 명칭 충돌 방지를 위해 dashboard_modules로 변경)
+# 커스텀 모듈 임포트
 try:
     from dashboard_modules.loader import load_raw_data
     from dashboard_modules.preprocess import preprocess_data
     import dashboard_modules.charts as charts
 except ImportError as e:
-    st.error(f"모듈 임포트 실패: {e}")
-    st.info("GitHub 저장소의 폴더 구조를 확인해 주세요. (app.py와 dashboard_modules 폴더가 같은 위치에 있어야 합니다.)")
+    st.error(f"❌ 모듈 임포트 실패: {e}")
+    st.markdown("### 🔍 서버 환경 진단 (Debug Information)")
+    st.write(f"**현재 경로 (CWD):** `{os.getcwd()}`")
+    st.write(f"**실행 파일 경로:** `{__file__}`")
+    st.write("**현재 폴더 파일 목록:**")
+    st.code("\n".join(os.listdir(current_dir)))
+    
+    if "dashboard_modules" not in os.listdir(current_dir):
+        st.warning("⚠️ `dashboard_modules` 폴더가 현재 위치에 보이지 않습니다. GitHub에 폴더가 포함되어 있는지 확인해 주세요.")
+    
+    st.info("💡 팁: GitHub에 올릴 때 `git add dashboard_modules/` 명령어를 통해 폴더 전체가 포함되었는지 확인이 필요합니다.")
     st.stop()
 
 # 1️⃣ 페이지 기본 설정
